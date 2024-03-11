@@ -1,13 +1,20 @@
 let slideIndex = 1;
+let slideInterval;
+
 showSlides(slideIndex);
 
 function plusSlides(n) {
+  clearInterval(slideInterval);
   showSlides(slideIndex += n);
+  slideInterval = setInterval(autoPlay, 3000);
 }
 
 function currentSlide(n) {
+  clearInterval(slideInterval);
   showSlides(slideIndex = n);
+  slideInterval = setInterval(autoPlay, 3000);
 }
+
 
 function showSlides(n) {
   let i;
@@ -25,12 +32,14 @@ function showSlides(n) {
   clickslides[slideIndex-1].className += " active";
 }
 
-setInterval(function () 
-          {if(slideIndex<3){
-            slideIndex++;
-            showSlides(slideIndex);
-          }else if(slideIndex===3){
-            slideIndex=1;
-            showSlides(slideIndex);
-          }
-          },3000)
+function autoPlay() {
+  if (slideIndex < 3) {
+    slideIndex++;
+    showSlides(slideIndex);
+  } else if (slideIndex === 3) {
+    slideIndex = 1;
+    showSlides(slideIndex);
+  }
+}
+
+slideInterval = setInterval(autoPlay, 3000);
